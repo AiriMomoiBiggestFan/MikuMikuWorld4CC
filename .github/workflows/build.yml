@@ -14,32 +14,24 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
+
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.3
+
+      - name: Install NSIS
+        run: choco install nsis -y
+
       - name: Build
         run: |
           rake build
 
-      - name: Check version
-        id: version
-        uses: actions/github-script@v7
+      - name: Upload Artifact Zip
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            if ("${{ github.ref }}".split("/").pop().match(/^v\d+\.\d+\.\d+.\d+$/)) {
-              core.setOutput("prerelease", false);
-            } else {
-              core.setOutput("prerelease", true);
-            }
-
-      - name: Upload
-        uses: softprops/action-gh-release@v1
-        with:
-          prerelease: ${{ steps.version.outputs.prerelease }}
-          body: |
-            Download "-setup.exe".
-          files: |
-            ./build/*.*
+          name: MikuMikuWorld4CC-Build
+          path: ./build/
