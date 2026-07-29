@@ -23,7 +23,11 @@ jobs:
         with:
           ruby-version: 3.3
 
-      - name: Build App Files
+      - name: Compile Solution (MSBuild)
+        run: |
+          msbuild MikuMikuWorld.sln /p:Configuration=Release /p:Platform=x64
+
+      - name: Copy Assets and Dependencies
         run: |
           rake build:copy
 
