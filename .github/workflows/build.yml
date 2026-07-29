@@ -23,12 +23,9 @@ jobs:
         with:
           ruby-version: 3.3
 
-      - name: Install NSIS
-        run: choco install nsis -y
-
-      - name: Build
+      - name: Build App Only
         run: |
-          rake build
+          rake build:app
 
       - name: Upload Artifact Zip
         uses: actions/upload-artifact@v4
