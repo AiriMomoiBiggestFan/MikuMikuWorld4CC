@@ -23,9 +23,9 @@ jobs:
         with:
           ruby-version: 3.3
 
-      - name: Build App Only
+      - name: Build Zip Package
         run: |
-          rake build:app
+          rake build:zip
 
       - name: Upload Artifact Zip
         uses: actions/upload-artifact@v4
